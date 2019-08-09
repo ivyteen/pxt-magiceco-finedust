@@ -196,11 +196,12 @@ namespace Finedust {
     export function ReadPM25(pm25pin: DigitalPin): number {
         let pm25 = 0
         
+        
+        while (pins.digitalReadPin(pm25pin) != PulseValue.Low) {
+        }
+        while (pins.digitalReadPin(pm25pin) != PulseValue.High) {
+        }
         /*
-        while (pins.digitalReadPin(pm25pin) != 0) {
-        }
-        while (pins.digitalReadPin(pm25pin) != 1) {
-        }
         pm25 = input.runningTime()
         while (pins.digitalReadPin(pm25pin) != 0) {
         }
@@ -221,11 +222,12 @@ namespace Finedust {
     export function ReadPM10(pm10pin: DigitalPin): number {
         let pm10 = 0
 
+        while (pins.digitalReadPin(pm10pin) != PulseValue.Low) {
+        }
+        while (pins.digitalReadPin(pm10pin) != PulseValue.High) {
+        }
+
         /*
-        while (pins.digitalReadPin(pm10pin) != 0) {
-        }
-        while (pins.digitalReadPin(pm10pin) != 1) {
-        }
         pm10 = input.runningTime()
         while (pins.digitalReadPin(pm10pin) != 0) {
         }
