@@ -195,6 +195,8 @@ namespace Finedust {
     //% blockId="readpm25" block="%pm25pin|에서 pm2.5(μg/m³)값 읽기"
     export function ReadPM25(pm25pin: DigitalPin): number {
         let pm25 = 0
+        
+        /*
         while (pins.digitalReadPin(pm25pin) != 0) {
         }
         while (pins.digitalReadPin(pm25pin) != 1) {
@@ -203,7 +205,9 @@ namespace Finedust {
         while (pins.digitalReadPin(pm25pin) != 0) {
         }
         pm25 = input.runningTime() - pm25
-        pm25 = pm25 - 2
+        */
+
+        pm25 = pm25
         return pm25;
     }
 
@@ -216,6 +220,8 @@ namespace Finedust {
     //% blockId="readpm10" block="%pm10pin|에서 pm10(μg/m³)값 읽기"
     export function ReadPM10(pm10pin: DigitalPin): number {
         let pm10 = 0
+
+        /*
         while (pins.digitalReadPin(pm10pin) != 0) {
         }
         while (pins.digitalReadPin(pm10pin) != 1) {
@@ -224,7 +230,8 @@ namespace Finedust {
         while (pins.digitalReadPin(pm10pin) != 0) {
         }
         pm10 = input.runningTime() - pm10
-        pm10 = pm10 - 2
+        */
+        pm10 = pm10 
         return pm10;
     }
 
