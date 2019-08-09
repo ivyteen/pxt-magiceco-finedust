@@ -4,8 +4,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*",
-        "OLED": "github:ivyteen/pxt-oled-ssd1306"
+        "radio": "*"
     },
     "files": [
         "README.md",
