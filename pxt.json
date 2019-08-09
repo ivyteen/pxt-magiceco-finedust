@@ -1,6 +1,6 @@
 {
     "name": "magiceco-finedust",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "",
     "dependencies": {
         "core": "*",
@@ -8,7 +8,8 @@
     },
     "files": [
         "README.md",
-        "finedust.ts"
+        "finedust.ts",
+        "wifi.ts"
     ],
     "testFiles": [
         "test.ts"
