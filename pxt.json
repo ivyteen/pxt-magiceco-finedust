@@ -4,7 +4,8 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "radio": "*",
+        "OLED": "github:Tinkertanker/pxt-oled-ssd1306"
     },
     "files": [
         "README.md",
