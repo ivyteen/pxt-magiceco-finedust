@@ -207,7 +207,7 @@ namespace Finedust {
         pm25 = input.runningTime() - pm25
         */
 
-        pm25 = pm25
+        pm25 = (pins.pulseIn(pm25pin, PulseValue.High, 1500000)/1000) - 2;
         return pm25;
     }
 
@@ -231,7 +231,7 @@ namespace Finedust {
         }
         pm10 = input.runningTime() - pm10
         */
-        pm10 = pm10 
+        pm10 = (pins.pulseIn(pm10pin, PulseValue.High, 1500000)/1000) - 2;
         return pm10;
     }
 
