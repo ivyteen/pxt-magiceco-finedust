@@ -187,9 +187,14 @@ namespace Finedust {
         */
 
         readBuffers = serial.readBuffer(10);
-        pm25 = ((readBuffers.getUint8(3) * 256) + readBuffers.getUint8(2)) / 10;
-        pm10 = ((readBuffers.getUint8(5) * 256) + readBuffers.getUint8(4)) / 10;
+        //pm25 = ((readBuffers.getUint8(3) * 256) + readBuffers.getUint8(2)) / 10;
+        //pm10 = ((readBuffers.getUint8(5) * 256) + readBuffers.getUint8(4)) / 10;
+        pm10 = readBuffers.getUint8(3);
+        pm25 = readBuffers.getUint8(2);
         
+
+
+
 
     }
 
