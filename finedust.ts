@@ -73,6 +73,7 @@ namespace Finedust {
      * TODO: Read finedust Value from the sensor 
      */
     //% weight=99 blockId=readInActive  block="자동으로 미세먼지 값 읽기"
+    /*
     export function readInActive(): void {
 
         
@@ -101,6 +102,38 @@ namespace Finedust {
 
 
     }
+    */
+
+/**
+     * TODO: Read finedust Value from the sensor 
+     */
+    //% weight=99 blockId=readFromQuery  block="수동으로 미세먼지 값 읽기"
+    export function readFromQuery(): void {
+      
+        let buf:Buffer = pins.createBuffer(19);
+        let tmpBuf:Buffer = null;
+        let ret = 0;
+        
+        buf.fill(0);
+
+        buf[0] = 0xAA;  //Head
+        buf[1] = 0xB4;  //Command ID 
+        buf[2] = 0x4;   //Data start
+       
+        /** buf[3] ~ buf[14] are 0x0 */
+        buf[15] = 0xFF;
+        buf[16] = 0xFF; // Data end
+
+        tmpBuf = buf.slice(2, 15);
+        
+        buf[17] = getCRC(tmpBuf);
+        buf[18] = 0xAB; // Tail
+
+        serial.writeBuffer(buf);
+        
+        getPMData();
+        
+    }
 
 /**
      * get pm2.5 value (μg/m³) 
@@ -122,6 +155,35 @@ namespace Finedust {
     }
 
 
+    /**
+     * get PM data
+    */
+    function getPMData() {
+
+        let bufdata: number = 0
+        let j: number = 0
+        let hexString: string = null
+        let receivedString: string[] = []
+
+        readBuffers = serial.readBuffer(10)
+        //serial.writeBuffer(readBuffers)
+        hexString = readBuffers.toHex()
+
+
+        for (let i = 0; i < readBuffers.length * 2; i += 2) {
+            receivedString[j] = hexString[i] + hexString[i + 1]
+            j++;
+        }
+
+        if (receivedString[0] == 'AA') {
+            if (receivedString[1] == 'C0') {
+
+                pm25 = convertToDecimal(receivedString[3] + receivedString[2])
+                pm10 = convertToDecimal(receivedString[5] + receivedString[4])
+
+            }
+        }
+    }
 
 
     /**
@@ -216,7 +278,7 @@ namespace Finedust {
             }
             position++;
         }
-        return decimal
+        return decimal;
     }
 
 
@@ -224,35 +286,35 @@ namespace Finedust {
     * convert hexdecimal value(A ~ F, a ~ f) to decimal
     */
    function parseString(indata: string): number {
-    switch (indata) {
-        case "A":
-            return 10;
-        case "B":
-            return 11;
-        case "C":
-            return 12;
-        case "D":
-            return 13;
-        case "E":
-            return 14;
-        case "F":
-            return 15;
-        case "a":
-            return 10;
-        case "b":
-            return 11;
-        case "c":
-            return 12;
-        case "d":
-            return 13;
-        case "e":
-            return 14;
-        case "f":
-            return 15;
+        switch (indata) {
+            case "A":
+                return 10;
+            case "B":
+                return 11;
+            case "C":
+                return 12;
+            case "D":
+                return 13;
+            case "E":
+                return 14;
+            case "F":
+                return 15;
+            case "a":
+                return 10;
+            case "b":
+                return 11;
+            case "c":
+                return 12;
+            case "d":
+                return 13;
+            case "e":
+                return 14;
+            case "f":
+                return 15;
 
-        default:
-            return 0;
+            default:
+                return 0;
+        }
     }
-}
 
 }
