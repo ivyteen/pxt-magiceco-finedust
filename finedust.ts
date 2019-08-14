@@ -62,10 +62,8 @@ namespace Finedust {
 
     /**
      * send command, Set Report Mode
-     * @param mode describe parameter here, eg : "Query"
      */
-    //% weight=99 blockId=setReportMode  block="리포트 모드를 %mode|로 설정"
-    export function setReportMode(mode:string):number {
+    function setReportMode(mode:string):number {
 
         let buf:Buffer = pins.createBuffer(19);
         let tmpBuf:Buffer = null;
