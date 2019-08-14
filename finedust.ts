@@ -1,3 +1,4 @@
+import { pause } from './pxt_modules/core/game';
 /**
  * Custom blocks
  */
@@ -39,7 +40,7 @@ namespace Finedust {
     //% weight=99 blockId=setQueryMode  block="쿼리 모드로 설정"
     export function setQueryMode():number {
         let ret = 0;
-        ret = setReportMode("query");
+        ret = setReportMode(0x1);
 
         reportMode = ret;
 
@@ -52,7 +53,7 @@ namespace Finedust {
     //% weight=99 blockId=setActiveMode  block="액티브 모드로 설정"
     export function setActiveMode():number {
         let ret = 0;
-        ret = setReportMode("active");
+        ret = setReportMode(0x0);
 
         reportMode = ret;
 
@@ -62,7 +63,7 @@ namespace Finedust {
     /**
      * send command, Set Report Mode
      */
-    function setReportMode(mode:string):number {
+    function setReportMode(mode:uint8):number {
 
         let buf:Buffer = pins.createBuffer(19);
         let tmpBuf:Buffer = null;
@@ -75,7 +76,7 @@ namespace Finedust {
         buf[2] = 0x2;   //Data start
         buf[3] = 0x1;
 
-        buf[4] = (mode==="query")? 0x1:0x0;   //set to query mode
+        buf[4] = mode;   //set to query mode 0:active 1:query
         /** buf[5] ~ buf[14] are 0x0 */
         buf[15] = 0xFF;
         buf[16] = 0xFF; // Data end
@@ -113,8 +114,26 @@ namespace Finedust {
         let mode = 0;
         //let hexString: string = null;
 
-        readBuffers = serial.readBuffer(10);
-        mode = readBuffers.getUint8(4);
+        let buf:Buffer = pins.createBuffer(19);
+        let tmpBuf:Buffer = null;
+        let ret = 0;
+        
+        buf.fill(0);
+
+        buf[0] = 0xAA;  //Head
+        buf[1] = 0xB4;  //Command ID 
+        buf[2] = 0x2;   //Data start
+        /** buf[3] ~ buf[14] are 0x0 */
+        buf[15] = 0xFF;
+        buf[16] = 0xFF; // Data end
+        buf[17] = 0x0;
+        buf[18] = 0xAB; // Tail
+
+        serial.writeBuffer(buf);
+        basic.pause(10);
+        buf = serial.readBuffer(10);
+        mode = buf.getUint8(4);
+
 
         return mode;
     }
