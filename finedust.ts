@@ -62,7 +62,7 @@ namespace Finedust {
     /**
      * send command, Set Report Mode
      */
-    function setReportMode(mode:uint8):number {
+    function setReportMode(mode:number):number {
 
         let buf:Buffer = pins.createBuffer(19);
         let tmpBuf:Buffer = null;
