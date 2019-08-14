@@ -130,7 +130,7 @@ namespace Finedust {
         buf[18] = 0xAB; // Tail
 
         serial.writeBuffer(buf);
-        
+        basic.pause(10);
         getPMData();
         
     }
