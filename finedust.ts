@@ -1,4 +1,3 @@
-
 /**
  * Custom blocks
  */
@@ -92,12 +91,6 @@ namespace Finedust {
         return ret;
     }
 
-
-   
-
-    
-    
-
     function getCRC(dataBuf: Buffer): uint8 {
 
         let crc = 0;
@@ -131,8 +124,8 @@ namespace Finedust {
 
         serial.writeBuffer(buf);
         basic.pause(10);
-        buf = serial.readBuffer(10);
-        mode = buf.getUint8(4);
+        tmpBuf = serial.readBuffer(10);
+        mode = tmpBuf.getUint8(4);
 
 
         return mode;
