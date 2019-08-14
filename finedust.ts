@@ -10,8 +10,8 @@ namespace Finedust {
     }
     
     //let pm01: number = null
-    let pm25: number = null;
-    let pm10: number = null;
+    let pm25: number = -1;
+    let pm10: number = -1;
     let readBuffers: Buffer = null;
     let reportMode: number = 0;
 
@@ -75,24 +75,29 @@ namespace Finedust {
     //% weight=99 blockId=readInActive  block="자동으로 미세먼지 값 읽기"
     export function readInActive(): void {
 
+        
         //let bufdata: number = 0
         let j: number = 0
         let hexString: string = null
         let receivedString: string[] = []
         
         serial.onDataReceived("AA", function () {
-            readBuffers = serial.readBuffer(9)
+            readBuffers = serial.readBuffer(9);
             //serial.writeBuffer(readBuffers)
-            hexString = readBuffers.toHex()
+            hexString = readBuffers.toHex();
             for (let i = 0; i < readBuffers.length * 2; i += 2) {
                 receivedString[j] = hexString[i] + hexString[i + 1]
                 j++;
             }
-            if (receivedString[0] == 'C0') {
+            if (receivedString[0] == "C0") {
                 pm25 = convertToDecimal(receivedString[2] + receivedString[1])
                 pm10 = convertToDecimal(receivedString[4] + receivedString[3])
             }
+          
+                
         })        
+        
+        
 
 
     }
