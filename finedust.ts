@@ -34,16 +34,16 @@ namespace Finedust {
 
 
     /**
-     * send command, Set Report Mode To Query 
+     * TODO: send command, Set Report Mode To Query 
      */
-    //% weight=99 blockId=setQueryMode  block="쿼리 모드로 설정"
+    //% weight=99 blockId=setQueryMode  block="수동 모드로 설정"
     export function setQueryMode():string {
-        let ret = 0;
+       // let ret = 0;
         let mode = "";
 
-        ret = setReportMode(0x1);
+        reportMode = setReportMode(0x1);
         
-        if (ret === WORKING_MODE.QUERY_MODE)
+        if (reportMode === WORKING_MODE.QUERY_MODE)
             mode = "Query";
         else
             mode = "NG";
@@ -52,21 +52,72 @@ namespace Finedust {
     }
 
     /**
-     * send command, Set Report Mode To Active 
+     * TODO: send command, Set Report Mode To Active 
      */
-    //% weight=99 blockId=setActiveMode  block="액티브 모드로 설정"
+    //% weight=99 blockId=setActiveMode  block="자동 모드로 설정"
     export function setActiveMode():string {
-        let ret = 0;
+        //let ret = 0;
         let mode = "";
-        ret = setReportMode(0x0);
+        reportMode = setReportMode(0x0);
 
-        if (ret === WORKING_MODE.ACTIVE_MODE)
-            mode = "Query";
+        if (reportMode === WORKING_MODE.ACTIVE_MODE)
+            mode = "Active";
         else
             mode = "NG";
         
         return mode;
     }
+
+
+    /**
+     * TODO: Read finedust Value from the sensor 
+     */
+    //% weight=99 blockId=readInActive  block="자동으로 미세먼지 값 읽기"
+    export function readInActive(): void {
+
+        //let bufdata: number = 0
+        let j: number = 0
+        let hexString: string = null
+        let receivedString: string[] = []
+        
+        serial.onDataReceived("AA", function () {
+            readBuffers = serial.readBuffer(9)
+            //serial.writeBuffer(readBuffers)
+            hexString = readBuffers.toHex()
+            for (let i = 0; i < readBuffers.length * 2; i += 2) {
+                receivedString[j] = hexString[i] + hexString[i + 1]
+                j++;
+            }
+            if (receivedString[0] == 'C0') {
+                pm25 = convertToDecimal(receivedString[2] + receivedString[1])
+                pm10 = convertToDecimal(receivedString[4] + receivedString[3])
+            }
+        })        
+
+
+    }
+
+/**
+     * get pm2.5 value (μg/m³) 
+     */
+    //% blockId="readpm25" block="pm2.5(μg/m³)값 읽기"
+    export function ReadPM25(): number {
+        //let pm25 = 0
+        return pm25;
+    }
+
+
+    /**
+     * get pm10 value (μg/m³) 
+     */
+    //% blockId="readpm10" block="pm10(μg/m³)값 읽기"
+    export function ReadPM10(): number {
+        //let pm10 = 0
+        return pm10;
+    }
+
+
+
 
     /**
      * send command, Set Report Mode
@@ -141,30 +192,62 @@ namespace Finedust {
     }
 
 
-    /**
-     * get pm2.5 value (μg/m³) 
+     /**
+     * convert string to decimal
      */
-    //% blockId="readpm25" block="pm2.5(μg/m³)값 읽기"
-    export function ReadPM25(): number {
-        //let pm25 = 0
-        
-        
-        return pm25;
+    function convertToDecimal(inString: string): number {
+
+        let decimal = 0
+        let position = 0
+
+        for (let i = inString.length - 1; i >= 0; i--) {
+
+            if (inString[i] >= '0' && inString[i] <= '9') {
+                decimal += parseInt(inString[i]) * Math.pow(16, position)
+            } else if (inString[i] >= 'A' && inString[i] <= 'F') {
+                decimal += parseString(inString[i]) * Math.pow(16, position)
+            } else if (inString[i] >= 'a' && inString[i] <= 'f') {
+                decimal += parseString(inString[i]) * Math.pow(16, position)
+            }
+            position++;
+        }
+        return decimal
     }
 
 
-    /**
-     * get pm10 value (μg/m³) 
-     */
-    //% blockId="readpm10" block="pm10(μg/m³)값 읽기"
-    export function ReadPM10(): number {
-        //let pm10 = 0
+     /**
+    * convert hexdecimal value(A ~ F, a ~ f) to decimal
+    */
+   function parseString(indata: string): number {
+    switch (indata) {
+        case "A":
+            return 10;
+        case "B":
+            return 11;
+        case "C":
+            return 12;
+        case "D":
+            return 13;
+        case "E":
+            return 14;
+        case "F":
+            return 15;
+        case "a":
+            return 10;
+        case "b":
+            return 11;
+        case "c":
+            return 12;
+        case "d":
+            return 13;
+        case "e":
+            return 14;
+        case "f":
+            return 15;
 
-     
-        return pm10;
+        default:
+            return 0;
     }
-
-
-
+}
 
 }
