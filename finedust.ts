@@ -37,26 +37,35 @@ namespace Finedust {
      * send command, Set Report Mode To Query 
      */
     //% weight=99 blockId=setQueryMode  block="쿼리 모드로 설정"
-    export function setQueryMode():number {
+    export function setQueryMode():string {
         let ret = 0;
+        let mode = "";
+
         ret = setReportMode(0x1);
+        
+        if (ret === WORKING_MODE.QUERY_MODE)
+            mode = "Query";
+        else
+            mode = "NG";
 
-        reportMode = ret;
-
-        return ret;
+        return mode;
     }
 
     /**
      * send command, Set Report Mode To Active 
      */
     //% weight=99 blockId=setActiveMode  block="액티브 모드로 설정"
-    export function setActiveMode():number {
+    export function setActiveMode():string {
         let ret = 0;
+        let mode = "";
         ret = setReportMode(0x0);
 
-        reportMode = ret;
-
-        return ret;
+        if (ret === WORKING_MODE.ACTIVE_MODE)
+            mode = "Query";
+        else
+            mode = "NG";
+        
+        return mode;
     }
 
     /**
@@ -103,8 +112,8 @@ namespace Finedust {
     }
 
    
-    function getCurrentReportMode(): uint8 {
-        let mode = 0;
+    function getCurrentReportMode(): number {
+        let mode;
         //let hexString: string = null;
 
         let buf:Buffer = pins.createBuffer(19);
