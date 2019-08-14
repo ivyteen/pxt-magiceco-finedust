@@ -160,48 +160,18 @@ namespace Finedust {
     */
     function getPMData() {
 
-        /*
-        let bufdata: number = 0
-        let j: number = 0
-        let hexString: string = null
-        let receivedString: string[] = []
-
-        readBuffers = serial.readBuffer(10)
-        //serial.writeBuffer(readBuffers)
-        hexString = readBuffers.toHex()
-
-
-        for (let i = 0; i < readBuffers.length * 2; i += 2) {
-            receivedString[j] = hexString[i] + hexString[i + 1]
-            j++;
-        }
-
-        if (receivedString[0] == 'AA') {
-            if (receivedString[1] == 'C0') {
-
-                pm25 = convertToDecimal(receivedString[3] + receivedString[2])
-                pm10 = convertToDecimal(receivedString[5] + receivedString[4])
-
-            }
-        }
-        */
-
         readBuffers = serial.readBuffer(10);
-        //pm25 = ((readBuffers.getUint8(3) * 256) + readBuffers.getUint8(2)) / 10;
-        //pm10 = ((readBuffers.getUint8(5) * 256) + readBuffers.getUint8(4)) / 10;
+        
         if ((readBuffers.getUint8(0) === 0xAA)&&(readBuffers.getUint8(1) === 0xC0)&&(readBuffers.getUint8(9) === 0xAB)) {
-            pm10 = readBuffers.getUint8(3);
-            pm25 = readBuffers.getUint8(2);    
+            //pm10 = readBuffers.getUint8(3);
+            //pm25 = readBuffers.getUint8(2);
+            pm25 = ((readBuffers.getUint8(3) * 256) + readBuffers.getUint8(2)) / 10;
+            pm10 = ((readBuffers.getUint8(5) * 256) + readBuffers.getUint8(4)) / 10;
         }
         else {
             pm10 = -1;
             pm25 = -1;    
         }
-        
-        
-
-
-
 
     }
 
