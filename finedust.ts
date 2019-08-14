@@ -17,9 +17,9 @@ namespace Finedust {
 
 
     /**
-    * Initialize PM Sensor
-    * @param tx describe parameter here, eq : SerialPin.P15
-    * @param rx describe parameter here, eq : SerialPin.P16
+    * TODO : Initialize PM Sensor
+    * @param tx describe parameter here, eg : SerialPin.P15
+    * @param rx describe parameter here, eg : SerialPin.P16
     * @param baudrate describe parameter here, eq : BaudRate.BaudRate9600
     */
     //% blockId="initSensor"
@@ -33,16 +33,43 @@ namespace Finedust {
         
     }
 
+
+    /**
+     * send command, Set Report Mode To Query 
+     */
+    //% weight=99 blockId=setQueryMode  block="쿼리 모드로 설정"
+    export function setQueryMode():number {
+        let ret = 0;
+        ret = setReportMode("query");
+
+        reportMode = ret;
+
+        return ret;
+    }
+
+    /**
+     * send command, Set Report Mode To Active 
+     */
+    //% weight=99 blockId=setActiveMode  block="액티브 모드로 설정"
+    export function setActiveMode():number {
+        let ret = 0;
+        ret = setReportMode("active");
+
+        reportMode = ret;
+
+        return ret;
+    }
+
     /**
      * send command, Set Report Mode
-     * @param mode describe parameter here, eq : "Query"
+     * @param mode describe parameter here, eg : "Query"
      */
     //% weight=99 blockId=setReportMode  block="리포트 모드를 %mode|로 설정"
     export function setReportMode(mode:string):number {
 
         let buf:Buffer = pins.createBuffer(19);
         let tmpBuf:Buffer = null;
-        //let str = "query";
+        let ret = 0;
         
         buf.fill(0);
 
@@ -51,7 +78,7 @@ namespace Finedust {
         buf[2] = 0x2;   //Data start
         buf[3] = 0x1;
 
-        buf[4] = (mode==="Query")? 0x1:0x0;   //set to query mode
+        buf[4] = (mode==="query")? 0x1:0x0;   //set to query mode
         /** buf[5] ~ buf[14] are 0x0 */
         buf[15] = 0xFF;
         buf[16] = 0xFF; // Data end
@@ -62,10 +89,13 @@ namespace Finedust {
         buf[18] = 0xAB; // Tail
 
         serial.writeBuffer(buf);
-        reportMode = (getCurrentReportMode() === 0x1) ? WORKING_MODE.QUERY_MODE : WORKING_MODE.ACTIVE_MODE;
+        ret = (getCurrentReportMode() === 0x1) ? WORKING_MODE.QUERY_MODE : WORKING_MODE.ACTIVE_MODE;
         
-        return reportMode;
+        return ret;
     }
+
+
+   
 
     
     
