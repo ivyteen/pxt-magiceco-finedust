@@ -18,11 +18,11 @@ namespace Finedust {
 
     /**
     * TODO : Initialize PM Sensor
-    * @param tx describe parameter here, eg : SerialPin.P15
-    * @param rx describe parameter here, eg : SerialPin.P16
+    * @param tx describe parameter here, eg: SerialPin.P15
+    * @param rx describe parameter here, eg: SerialPin.P16
     */
     //% blockId="initSensor"
-    //% block="미세먼지 센서 초기화 Tx:%tx|, Rx:%rx"
+    //% block="미세먼지 센서 초기화 - 송신:%tx|, 수신:%rx"
     export function initSensor(tx: SerialPin, rx: SerialPin): void {
 
         serial.redirect(

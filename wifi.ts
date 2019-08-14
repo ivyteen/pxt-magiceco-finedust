@@ -19,7 +19,7 @@ namespace WiFi {
      * @param wifiTX describe parameter here, eg: SerialPin.P12
      */
     //% weight=100
-    //% blockId="wifi_init" block="WiFi 설정 - 수신: %wifiRX|, 송신: %wifiTX|, 보레이트: %baudrate"
+    //% blockId="wifi_init" block="WiFi 설정 - 수신: %wifiRX|, 송신: %wifiTX|, 통신속도: %baudrate"
     export function initwifi(wifiRX: SerialPin, wifiTX: SerialPin, baudrate: BaudRate): void {
         serial.redirect(
             wifiRX,
