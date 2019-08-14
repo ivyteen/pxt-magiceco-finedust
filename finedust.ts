@@ -1,4 +1,4 @@
-import { pause } from './pxt_modules/core/game';
+
 /**
  * Custom blocks
  */
