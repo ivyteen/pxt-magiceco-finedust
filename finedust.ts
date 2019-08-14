@@ -20,10 +20,9 @@ namespace Finedust {
     * TODO : Initialize PM Sensor
     * @param tx describe parameter here, eg : SerialPin.P15
     * @param rx describe parameter here, eg : SerialPin.P16
-    * @param baudrate describe parameter here, eq : BaudRate.BaudRate9600
     */
     //% blockId="initSensor"
-    //% block="미세먼지 센서 초기화 Tx:%tx|, Rx:%rx|, 통신속도:%baudrate"
+    //% block="미세먼지 센서 초기화 Tx:%tx|, Rx:%rx"
     export function initSensor(tx: SerialPin, rx: SerialPin): void {
 
         serial.redirect(
