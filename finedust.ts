@@ -160,6 +160,7 @@ namespace Finedust {
     */
     function getPMData() {
 
+        /*
         let bufdata: number = 0
         let j: number = 0
         let hexString: string = null
@@ -183,6 +184,12 @@ namespace Finedust {
 
             }
         }
+        */
+
+        readBuffers = serial.readBuffer(10)
+        pm25 = readBuffers[0].valueOf()
+        pm10= readBuffers[1].valueOf()
+
     }
 
 
