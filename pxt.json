@@ -9,7 +9,7 @@
     "files": [
         "README.md",
         "finedust_pwm.ts",
-        "wifi.ts",
+        "wifi_10make.ts",
         "ssd1306.ts",
         "SSD1306_OLED.cpp",
         "Adafruit_SSD1306.h",

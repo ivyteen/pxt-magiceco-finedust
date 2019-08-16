@@ -7,7 +7,7 @@ namespace FinedustPWM {
    
     /**
      * get pm2.5 value (μg/m³) 
-     * @param pm25pin describe parameter here, eg: DigitalPin.P14
+     * @param pm25pin describe parameter here, eg: DigitalPin.P15
      */
     //% advanced=true
     //% blockId="readpm25" block="value of pm2.5(μg/m³) at pin %pm25pin"
@@ -29,7 +29,7 @@ namespace FinedustPWM {
 
     /**
      * get pm10 value (μg/m³) 
-     * @param pm10pin describe parameter here, eg: DigitalPin.P13     
+     * @param pm10pin describe parameter here, eg: DigitalPin.P16     
      */
     //% advanced=true
     //% blockId="readpm10" block="value of pm10(μg/m³) at pin %pm10pin"
