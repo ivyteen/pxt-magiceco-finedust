@@ -1,6 +1,7 @@
 //% color=#27b0ba weight=100 icon="\uf26c"
 namespace OLED {
 
+    /* this is for git commit test */
     /**
      * initialises the i2c OLED display
      * @param height height (in pixels), eg: 64
